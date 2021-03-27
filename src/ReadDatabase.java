@@ -1,38 +1,78 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ReadDatabase {
 
-    ArrayList<Album> album = new ArrayList<>();
+    private Album[] albums;
+    private int numAlbums;
+
+    private Song[] songs;
+    private int numSongs;
+
+    private int rankingInt;
+    private int counter;
+
+    public ReadDatabase() throws FileNotFoundException {
+        albums = new Album[20];
+        numAlbums = 0;
+        songs = new Song[400];
+        numAlbums = 0;
+        counter = 0;
+        readFile();
+    }
 
     public void readFile() throws FileNotFoundException {
-
         String dataFile = System.getProperty("user.dir") + File.separator + "albums.txt";
+        File text = new File(dataFile);
+        Scanner scan = new Scanner(text);
 
-        try {
-            File textFile = new File(dataFile);
-            Scanner scan = new Scanner(textFile);
+        while (scan.hasNextLine()) {
+            String record = scan.nextLine();
 
-            while(scan.hasNextLine()) {
-                scan.useDelimiter(":");
-
-                String temp1 = scan.next();
-                String temp2 = scan.next();
-                String temp3 = scan.next();
-                String temp4 = scan.next();
-                String temp5 = scan.nextLine();
-
-                album.add(new Album(temp1, temp2, temp3, temp4, temp5));
+            Scanner lineScan = new Scanner(record);
+            lineScan.useDelimiter(":");
 
 
+            String ranking, title, artist, year, sales, songName, songLength;
 
+            ranking = lineScan.next();
+
+            try {
+                rankingInt = Integer.parseInt(ranking);
+                counter++;
+                if(counter == rankingInt) {
+                    title = lineScan.next();
+                    artist = lineScan.next();
+                    year = lineScan.next();
+                    sales = lineScan.nextLine();
+                    addAlbum(ranking, title, artist, year, sales);
+                }
             }
+            catch(NumberFormatException exception) {
+                Scanner songScan = new Scanner(record);
+                songScan.useDelimiter("[-\\(|\\)]");
+                songName = songScan.next();
+                songLength = songScan.nextLine();
 
-        }catch (FileNotFoundException e) {
-            e.printStackTrace();
-            System.out.println("File has not been found");
+                if(songLength.equals("---------------------------------------------------------------------------------")){
+
+                }
+                else {
+                    addSong(songName, songLength);
+
+                }
+            }
         }
+    }
+
+    private void addAlbum(String ranking, String title, String artist, String year, String sales) {
+        albums[numAlbums]=new Album(ranking, title, artist, year, sales);
+        numAlbums++;
+    }
+
+    private void addSong(String name, String length) {
+        songs[numSongs]=new Song(name, length);
+        numSongs++;
     }
 }

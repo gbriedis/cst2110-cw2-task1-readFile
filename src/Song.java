@@ -2,10 +2,15 @@ public class Song {
     private String name;
     private String length;
 
-    public Song() {
+    public Song(String name, String length) {
+        this.name = name;
+        this.length = length;
+
+        output();
     }
 
-    public Song(String a) {
-        this.name = a;
+    private void output() {
+        System.out.print("Song Name: " + name + "|");
+        System.out.println("Song Length: " + length);
     }
 }
