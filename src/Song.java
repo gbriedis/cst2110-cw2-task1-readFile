@@ -6,7 +6,7 @@ public class Song {
         this.name = name;
         this.length = length;
 
-        output();
+        //output();
     }
 
     private void output() {
