@@ -18,7 +18,7 @@ public class Album {
         tracks = new ArrayList<String>();
     }
 
-
+    // getters
     public String getRanking(){
         return this.ranking;
     }
@@ -39,11 +39,13 @@ public class Album {
         return sales;
     }
 
+    // add track to ArrayList
     public void addTrack(String name, String length) {
         tracks.add(name);
         tracks.add(length);
     }
 
+    // output every track at a specified Album array index (Album[index])
     public void outputTrack() {
         String sTitle = "Title", sTime = "(Mins:Secs)";
         System.out.println("Album title: " + this.title);
@@ -73,6 +75,7 @@ public class Album {
 
     }
 
+    // output all the tracks containing a phrase
     public void findTrack(String phrase) {
         for (int i=0;i<tracks.size();i++){
             if(tracks.get(i).contains(phrase)){
@@ -88,7 +91,7 @@ public class Album {
         }
     }
 
-
+    // toString to output all of the Albums
     @Override
     public String toString(){
         return String.format("|%3s\t|%60s\t|%20s\t|%5s\t|%7s|", getRanking(), getTitle(), getArtist(), getYear(), getSales());

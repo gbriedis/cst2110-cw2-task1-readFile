@@ -1,8 +1,5 @@
-import sun.tools.java.ScannerInputReader;
-
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.Scanner;
 
 
@@ -17,6 +14,7 @@ public class ApplicationRunner {
             String userInput = stream.nextLine();
 
             switch (userInput){
+                // output all the albums
                 case "1":
                     System.out.println("–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––");
                     String ranking = "Rank", title = "Title", artist = "Artist", year = "Year", sales = "Sales";
@@ -27,11 +25,13 @@ public class ApplicationRunner {
                     System.out.println("–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––");
                     break;
                 case "2":
+                    //output all the tracks in a specified album
                     System.out.print("Enter album rank from list [0-19] :");
                     int choice = stream.nextInt();
                     albums[choice].outputTrack();
                     break;
                 case "3":
+                    // output all the tracks containing specific word
                     System.out.print("Enter search word or phrase > ");
                     String trackInput = stream.nextLine();
                     for (int i = 0; i < albums.length; i++) {
@@ -46,6 +46,7 @@ public class ApplicationRunner {
         }
     }
 
+    // output choices
     private static void outputChoices() {
         System.out.println("List albums......1");
         System.out.println("Select album.....2");
@@ -53,12 +54,14 @@ public class ApplicationRunner {
         System.out.println("List albums......0");
     }
 
+    // output albums
     private static void outputAlbums(Album[] albums) {
         for(Album i: albums) {
             System.out.println(i);
         }
     }
 
+    // read file, store it in an array using Album class
     private static Album[] readFile() throws FileNotFoundException {
         Album[] albums = new Album[20];
 
@@ -77,6 +80,7 @@ public class ApplicationRunner {
 
             ranking = lineScan.next();
             try {
+                // if counter == ranking then create a new array of album
                 int rankingInt = Integer.parseInt(ranking);
                 counter++;
                 if(counter == rankingInt) {
@@ -89,6 +93,7 @@ public class ApplicationRunner {
                 }
             }
             catch(NumberFormatException exception) {
+                // if counter != ranking then save it into ArrayList of tracks
                 Scanner songScan = new Scanner(record);
                 songScan.useDelimiter("[-\\(|\\)]");
                 songName = songScan.next();
